@@ -12,7 +12,7 @@ export default function Results() {
       <h1 className="text-4xl font-bold">Too slow 🐢</h1>
       <h1 className="text-4xl font-bold">{totalReactionTime.toFixed(3)}ms</h1>
       <h1 className="text-4xl font-bold">{accuracy.toFixed(0)}%</h1>
-      <button className="bg-black text-white text-3xl w-[300px] h-[100px] px-4 py-2 rounded-md"><Link href="/">Play again</Link></button>
+      <Link href="/"><button className="bg-black text-white text-3xl w-[300px] h-[100px] px-4 py-2 rounded-md">Play again</button></Link>
     </div>
   )
 }

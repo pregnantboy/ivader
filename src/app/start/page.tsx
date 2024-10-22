@@ -109,7 +109,7 @@ export default function Start() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen transition-none gap-2">
+    <div className="flex flex-col items-center justify-center h-screen transition-none gap-2 pb-[10vh]">
       <div className={`max-h-[90vw] h-[800px] ${shouldShowCrosshair ? 'opacity-1' : 'opacity-0'}`}>
         <Crosshair correctDirection={correctDirection} redDirection={redDirection} />
       </div>
