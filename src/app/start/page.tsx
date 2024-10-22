@@ -1,8 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import dynamic from 'next/dynamic'
-const Crosshair = dynamic(() => import('./Crosshair'), { ssr: false })
+import Crosshair from "./Crosshair"
 
 import { Direction, DIRECTIONS } from "../constants"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -47,10 +46,6 @@ export default function Start() {
   const shouldShowCrosshairRef = useRef(shouldShowCrosshair)
   const numberOfCorrectResponsesRef = useRef(0)
 
-  useEffect(() => {
-    nextRound()
-  }, [nextRound])
-
   const nextRound = useCallback(() => {
     if (currentIndexRef.current === randomIntervalsRef.current.length - 1 ) {
       // go somewhere else
@@ -76,6 +71,10 @@ export default function Start() {
       lastShownTimestampRef.current = Date.now()
     }, currentInterval)
   }, [router])
+
+  useEffect(() => {
+    nextRound()
+  }, [nextRound])
 
   const handleDirection = useCallback((direction: Direction) => {
     if (!shouldShowCrosshairRef.current) {
