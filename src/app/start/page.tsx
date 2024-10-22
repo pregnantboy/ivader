@@ -1,13 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import dynamic from 'next/dynamic';
-const Crosshair = dynamic(() => import('./Crosshair'), { ssr: false });
+import dynamic from 'next/dynamic'
+const Crosshair = dynamic(() => import('./Crosshair'), { ssr: false })
 
 import { Direction, DIRECTIONS } from "../constants"
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation"
 
-const loops = 4
 const intervals = [2000, 4000, 6000, 8000, 10000]
 
 function getRandomDirection(directions?: Direction[]): Direction {
@@ -17,19 +16,19 @@ function getRandomDirection(directions?: Direction[]): Direction {
 
 function logMean(numbers: number[]) {
   if (!Array.isArray(numbers) || numbers.length === 0) {
-      throw new Error('Input must be a non-empty array of numbers');
+    throw new Error('Input must be a non-empty array of numbers')
   }
 
   // Check if all numbers are positive
   if (numbers.some(num => typeof num !== 'number' || num <= 0)) {
-      throw new Error('All numbers must be positive');
+    throw new Error('All numbers must be positive')
   }
 
   // Calculate sum of natural logarithms
-  const sumOfLogs = numbers.reduce((sum, num) => sum + Math.log(num), 0);
+  const sumOfLogs = numbers.reduce((sum, num) => sum + Math.log(num), 0)
   
   // Calculate geometric mean
-  return Math.exp(sumOfLogs / numbers.length);
+  return Math.exp(sumOfLogs / numbers.length)
 }
 
 export default function Start() {
@@ -49,8 +48,8 @@ export default function Start() {
   const numberOfCorrectResponsesRef = useRef(0)
 
   useEffect(() => {
-      nextRound()
-  }, [])
+    nextRound()
+  }, [nextRound])
 
   const nextRound = useCallback(() => {
     if (currentIndexRef.current === randomIntervalsRef.current.length - 1 ) {
@@ -76,7 +75,7 @@ export default function Start() {
       shouldShowCrosshairRef.current = true
       lastShownTimestampRef.current = Date.now()
     }, currentInterval)
-  }, [])
+  }, [router])
 
   const handleDirection = useCallback((direction: Direction) => {
     if (!shouldShowCrosshairRef.current) {
@@ -89,7 +88,7 @@ export default function Start() {
     console.log(`Round ${currentIndexRef.current + 1} took ${responseTime}ms`)
     totalReactionTimeRef.current.push(responseTime)
     nextRound()
-  }, [])
+  }, [nextRound])
 
   // handle keydown events
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
@@ -103,7 +102,7 @@ export default function Start() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [])
+  }, [handleKeyDown])
 
   if (!correctDirection || !redDirection) {
     return null
